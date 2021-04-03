@@ -24,10 +24,6 @@ public class MainMenuOptions : MonoBehaviour
         WordManager.score = 0;
         WordManager.lives = 3;
         SceneManager.LoadScene(1);
-    }
-
-    public void SetUsername()
-    {
         username = nameInput.text;
     }
 
