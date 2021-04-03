@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WordManager : MonoBehaviour
 {
@@ -8,15 +8,33 @@ public class WordManager : MonoBehaviour
 
     public WordSpawner wordSpawner;
 
+    public static int score;
+    public static int lives = 3;
+
     private bool hasActiveWord;
     private Word activeWord;
+    //private HighScore newHighScore;
+
 
     public void AddWord()
     {
         Word word = new Word(WordGenerator.GetRandomWord(), wordSpawner.SpawnWord());
-        Debug.Log(word.word);
+        //Debug.Log(word.word);
 
         words.Add(word);
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        lives--;
+        if (lives <= 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
     public void TypeLetter(char letter)
@@ -44,6 +62,7 @@ public class WordManager : MonoBehaviour
 
         if(hasActiveWord && activeWord.WordTyped())
         {
+            score++;
             hasActiveWord = false;
             words.Remove(activeWord);
         }
